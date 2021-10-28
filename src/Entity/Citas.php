@@ -18,97 +18,90 @@ class Citas
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="time")
      */
-    private $hora_inicio;
+    private $hora;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=ClienteData::class, inversedBy="Citas")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $hora_fin;
+    private $clienteData;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=PersonalData::class, inversedBy="Citas")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $cliente_data_id;
+    private $PersonalData;
 
-     /**
-     * @ORM\Column(type="integer")
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $Fecha;
+
+    /**
+     * @ORM\Column(type="string", length=11)
      */
     private $telefono;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $personal_data_id;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $servicios_id;
-
-    public function getId(): ?int
+    public function getHora(): ?\DateTimeInterface
     {
-        return $this->id;
+        return $this->hora;
     }
 
-    public function getHoraInicio(): ?string
+    public function setHora(\DateTimeInterface $hora): self
     {
-        return $this->hora_inicio;
-    }
-
-    public function setHoraInicio(string $hora_inicio): self
-    {
-        $this->hora_inicio = $hora_inicio;
+        $this->hora = $hora;
 
         return $this;
     }
 
-    public function getHoraFin(): ?string
+    public function getClienteData(): ?ClienteData
     {
-        return $this->hora_fin;
+        return $this->clienteData;
     }
 
-    public function setHoraFin(string $hora_fin): self
+    public function setClienteData(?ClienteData $clienteData): self
     {
-        $this->hora_fin = $hora_fin;
+        $this->clienteData = $clienteData;
 
         return $this;
     }
 
-    public function getClienteDataId(): ?int
+    public function getPersonalData(): ?PersonalData
     {
-        return $this->cliente_data_id;
+        return $this->PersonalData;
     }
 
-    public function setClienteDataId(int $cliente_data_id): self
+    public function setPersonalData(?PersonalData $PersonalData): self
     {
-        $this->cliente_data_id = $cliente_data_id;
+        $this->PersonalData = $PersonalData;
 
         return $this;
     }
 
-    public function getPersonalDataId(): ?int
+    public function getFecha(): ?\DateTimeInterface
     {
-        return $this->personal_data_id;
+        return $this->Fecha;
     }
 
-    public function setPersonalDataId(int $personal_data_id): self
+    public function setFecha(\DateTimeInterface $Fecha): self
     {
-        $this->personal_data_id = $personal_data_id;
+        $this->Fecha = $Fecha;
 
         return $this;
     }
 
-    public function getServiciosId(): ?int
+    public function getTelefono(): ?string
     {
-        return $this->servicios_id;
+        return $this->telefono;
     }
 
-    public function setServiciosId(int $servicios_id): self
+    public function setTelefono(string $telefono): self
     {
-        $this->servicios_id = $servicios_id;
+        $this->telefono = $telefono;
 
         return $this;
     }
+
 }

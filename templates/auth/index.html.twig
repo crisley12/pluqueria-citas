@@ -1,20 +1,284 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AuthController!{% endblock %}
+ {% block title %} Home {% endblock %}
+
+    {% block stylesheets %}
+    <link rel="stylesheet" href="{{ app.request.getBaseURL() }}/assets/css/estyles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="preloader"></div>
+    <div class="centrado" id="onload">
+        <div class="lds-facebook"><div></div><div></div><div></div></div>
+    </div>
+    <header>
+        <nav id="nav" class="nav1">
+            <div class="contenedor-nav">
+                <div class="logo">
+                    <img src="{{ app.request.getBaseURL() }}/assets/fotos/logo oficial.png" alt="">
+                   
+                </div>
+                <div class="enlaces" id="enlaces">
+                    <a href="#" id="enlace-inicio" class="btn-header">Inicio</a>
+                    <a href="#" id="enlace-equipo" class="btn-header">Equipo</a>
+                    <a href="#" id="enlace-servicio" class="btn-header">Servicios</a>
+                    <a href="#" id="enlace-trabajo" class="btn-header">Trabajos</a>
+                    <a href="{{ app.request.getBaseURL() }}/users" id="" class="btn-header">Agendar - Cita</a>
+                    <a href="{{ app.request.getBaseURL() }}/login" id="enlace-trabajo" class="btn-header">Acceder</a>
+                    
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+                </div>
+                <div class="icono" id="open">
+                </div>
+            </div>
+        </nav>
+        <div class="textos">
+            <h1>Armany Studios</h1>
+            <p> Servicios básicos de Peluqueria </p>
+        </div>
+         </header>
+    <main>
+        <section class="team contenedor" id="equipo">
+            <h3>Nuestro equipo</h3>
+            <p class="after">Somos gente asombrosa y creativa</p>
+            <div class="card">
+                <div class="content-card">
+                    <div class="people">
+                     <img src="{{ app.request.getBaseURL() }}/assets/fotos/yusneidy 2.jpg">
+                    </div>
+                    <div class="texto-team">
+                        <h4>Yusneidy</h4>
+                        <p>Administrador/Makeup/Peinados/Trenzas</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <div class="people">
+                     <img src="{{ app.request.getBaseURL() }}/assets/fotos/foto tia.jpg">
+                    </div>
+                    <div class="texto-team">
+                        <h4>Belkys</h4>
+                        <p>Fundadora/Peluquera</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <div class="people">
+                    <img src="{{ app.request.getBaseURL() }}/assets/fotos/foto peluquera.jpg">
+                    </div>
+                    <div class="texto-team">
+                        <h4>Luisa</h4>
+                        <p>Peluquera/Barbera</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <div class="people">
+                    <img src="{{ app.request.getBaseURL() }}/assets/fotos/foto manicura.jpg">
+                    </div>
+                    <div class="texto-team">
+                        <h4>Astri</h4>
+                        <p>Manicurista</p>
+                    </div>
+                </div>
+            </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/proyecto/src/Controller/AuthController.php'|file_link(0) }}">src/Controller/AuthController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/proyecto/templates/auth/index.html.twig'|file_link(0) }}">templates/auth/index.html.twig</a></code></li>
-    </ul>
-</div>
-{% endblock %}
+        </section>
+
+         <section class="about" id="servicio">
+            <div class="contenedor">
+            
+<h3>Nuestros servicios</h3>
+                <p Todo tipo de servicios y tratamientos básicos de peliquería</p>
+                <p class="after"> para el cuidado del cabello, uñas y el rostro</p>
+                <div class="servicios">
+                    <div class="caja-servicios">
+                        <img src="" alt="">
+                        <h4>Cabello</h4>
+                        <p>Corte, Lavado, Coloración y Peinados</p>
+                    </div>
+                    <div class="caja-servicios">
+                        <img src="" alt="">
+                        <h4>Makeup</h4>
+                        <p>Hermosos maquillajes, Cursos</p>
+                    </div>
+                    <div class="caja-servicios">
+                        <img src="" alt="">
+                        <h4>Uñas</h4>
+                        <p>Manicue y Pedicure</p>
+                    </div>
+                </div>
+            </div>
+            </section>
+  
+        <section class="work contenedor" id="trabajo">
+            <h3>Nuestro trabajo</h3>
+            <p class="after">Nos apasiona lo que hacemos</p>
+            <div class="botones-work">
+                <ul>
+                    <li class="filter active" data-nombre='todos'>Todos</li>
+                    <li class="filter" data-nombre='Cabello'>Cabello</li>
+                    <li class="filter" data-nombre='Makeup'>Makeup</li>
+                    <li class="filter" data-nombre='Uñas'>Uñas</li>
+                    <li class="filter" data-nombre='Cursos'>Cursos</li>
+                    <li class="filter" data-nombre='Peluqueria'>Salon</li>
+            </div>
+            <div class="galeria-work">
+                <div class="cont-work Cabello">
+                    <div class="img-work">
+                     <img src="{{ app.request.getBaseURL() }}/assets/fotos/corte de caballero.jpg" alt="">
+                        
+                    </div>
+                    <div class="textos-work">
+                        <h4>Corte de caballero</h4>
+                    </div>
+                </div>
+                    <div class="cont-work Cabello">
+                        <div class="img-work">
+                         <img src="{{ app.request.getBaseURL() }}/assets/fotos/corte de cabello 2.jpg" alt="">
+                           
+                        </div>
+                        <div class="textos-work">
+                            <h4>Corte de caballero</h4>
+                        </div>
+                    </div>
+                        <div class="cont-work Cabello">
+                            <div class="img-work">
+                             <img src="{{ app.request.getBaseURL() }}/assets/fotos/corte de cbello 3.jpg" alt="">
+                             
+                            </div>
+                            <div class="textos-work">
+                                <h4>Corte de caballero</h4>
+                            </div>
+                        </div>
+                            <div class="cont-work Cabello">
+                                <div class="img-work">
+                                 <img src="{{ app.request.getBaseURL() }}/assets/fotos/peinados.jpg" alt="">
+                                    
+                                </div>
+                                <div class="textos-work">
+                                    <h4>Peinados</h4>
+                                </div>
+                            </div>
+                                <div class="cont-work Cabello">
+                                    <div class="img-work">
+                                     <img src="{{ app.request.getBaseURL() }}/assets/fotos/trenzas.jpg" alt="">
+                                       
+                                    </div>
+                                    <div class="textos-work">
+                                        <h4>Trenzas</h4>
+                                    </div>
+                                </div>
+                                    <div class="cont-work Cabello">
+                                        <div class="img-work">
+                                         <img src="{{ app.request.getBaseURL() }}/assets/fotos/trenzas 3.jpg" alt="">
+                                           
+                                    </div>
+                                        <div class="textos-work">
+                                            <h4>Trenzas</h4>
+                                        </div>
+                                    </div>
+                            
+                <div class="cont-work Makeup">
+                    <div class="img-work">
+                     <img src="{{ app.request.getBaseURL() }}/assets/fotos/maquillaje.jpg" alt="">
+                    
+                    </div>
+                    <div class="textos-work">
+                        <h4>Makeup</h4>
+                    </div>
+                </div>
+                <div class="cont-work Makeup">
+                    <div class="img-work">
+                     <img src="{{ app.request.getBaseURL() }}/assets/fotos/maquillaje 2.jpg" alt="">
+                        
+                    </div>
+                    <div class="textos-work">
+                        <h4>Makeup</h4>
+                    </div>
+                </div>
+
+                <div class="cont-work Uñas">
+                    <div class="img-work">
+                     <img src="{{ app.request.getBaseURL() }}/assets/fotos/uñas.jpg" alt="">
+                       
+                    </div>
+                    <div class="textos-work">
+                        <h4>Uñas</h4>
+                    </div>
+                </div>
+
+                <div class="cont-work Cursos">
+                    <div class="img-work">
+                     <img src="{{ app.request.getBaseURL() }}/assets/fotos/cursos.jpg" alt="">
+                      
+                    </div>
+                    <div class="textos-work">
+                        <h4>Cursos</h4>
+                    </div>
+                </div>
+               
+                <div class="cont-work Cursos">
+                    <div class="img-work">
+                     <img src="{{ app.request.getBaseURL() }}/assets/fotos/cursos 2.jpg" alt="">
+                  
+                    </div>
+                    <div class="textos-work">
+                        <h4>cursos</h4>
+                    </div>
+                </div>
+
+
+                <div class="cont-work Peluqueria">
+                    <div class="img-work">
+                     <img src="{{ app.request.getBaseURL() }}/assets/fotos/pelqueria.jpg" alt="">
+                        
+                    </div>
+                    <div class="textos-work">
+                        <h4>Peluqueria</h4>
+                    </div>
+                </div>
+                
+                <div class="cont-work Peluqueria">
+                    <div class="img-work">
+                     <img src="{{ app.request.getBaseURL() }}/assets/fotos/peluqueria 2.jpg" alt="">
+                        
+                    </div>
+                    <div class="textos-work">
+                        <h4>Peluqueria</h4>
+                    </div>
+                </div>
+                
+                <div class="cont-work Peluqueria">
+                    <div class="img-work">
+                     <img src="{{ app.request.getBaseURL() }}/assets/fotos/peluqueria 3.jpg" alt="">
+                       
+                    </div>
+                    <div class="textos-work">
+                        <h4>Peluqueria</h4>
+                    </div>
+                </div>
+                </div>
+            
+        </section>
+    
+    <footer>
+         <center>  <p>Sitio web creado por González(2021)</p></center>
+      
+    </footer>
+
+<% block javascripts %}
+<script src="{{ app.request.getBaseURL() }}/assets/js/jquery.js"></script>
+ <script src="{{ app.request.getBaseURL() }}/assets/js/main.js"></script>
+<script src="{{ app.request.getBaseURL() }}/assets/js/filtro.js"></script>
+   {% endblock %}
+
+
+
+
+
+
+
+
+
+
+   
+    

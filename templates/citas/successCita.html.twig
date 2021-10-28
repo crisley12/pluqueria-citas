@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} VALIDO {% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ app.request.getBaseURL() }}/assets/css/espera.css">
+
+{% endblock %}
+{% block body %}
+
+<div class="container">
+<h1 class="login-text"> CITA CREADA EXITOSAMENTE</h1>
+ <a href="{{ app.request.getBaseURL() }}" class="btn-header">Home</a>
+</div>
+{% endblock %}

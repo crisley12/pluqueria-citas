@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+    
+  body {
+    font-family: 'open sans';
+    background: linear-gradient(to bottom,
+    rgba(0, 0, 0, 0.705),
+    rgba(151, 106, 106, 0.486),
+    rgba(0, 0, 0, 0.699)
+    ), url(../fotos/fondo\ 4.jpeg);
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+  }
+
+
+
+
+  nav{
+    width: 100%;
+    position: static;
+    box-shadow: 0 0 10px 0 rgba(8, 8, 8, 0.966);
+  }
+  
+  /* color del nav y letras*/
+  .nav1{
+    background: transparent;
+    height: 80px;
+    color:rgb(255, 255, 255);
+  }
+  
+  
+  
+  .contenedor-nav{
+    display: flex;
+    margin: auto;
+    width: 90%;
+    justify-content: space-between;
+    align-items: center;
+    max-width:1000px;
+    height:inherit;
+    overflow: hidden;
+  }
+  
+  nav .enlaces a{
+    display: inline-block;
+    padding: 5px 0;
+    margin-right: 17px;
+    font-size: 17px;
+    font-weight: 300;
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+    color: inherit;
+  }
+  
+  nav .enlaces a:hover{
+    border-bottom: 3px solid #7614a4;
+    transition: 0.6s;
+  }
+
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 5% auto;
+    align-items: center;
+    border-radius: 5px;
+    min-height: 200px;
+    background: #FFF;
+    padding: 30px 20px;
+}
+
+.container .login-text {
+  color: rgb(7, 7, 7);
+  font-size: 1.5rem;
+  text-align: center;
+  display: block;
+  
+}
+
+.container .btn{ 
+display: block;
+width: 50%;
+height: 40px;
+padding: 10px 10px;
+text-align: center;
+border: none;
+background: #9e138c;
+outline: none;
+border-radius: 30px;
+font-size: 1.2rem;
+color: rgb(241, 241, 241);
+cursor: pointer;
+transition: .3s;
+}
+
+.container .btn:hover{ 
+transform: translateY(-5px);
+background: #48535393;
+}

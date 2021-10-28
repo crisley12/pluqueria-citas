@@ -18,7 +18,7 @@ class Usuario
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=100, unique=true)
      */
     private $email;
 
@@ -35,12 +35,22 @@ class Usuario
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $cliente_data;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $personal_data;
+    private $telefono;
+
+    /**
+     * @ORM\OneToOne(targetEntity=ClienteData::class, inversedBy="usuario", cascade={"persist", "remove"})
+     */
+    private $clienteData;
+
+    /**
+     * @ORM\OneToOne(targetEntity=PersonalData::class, inversedBy="usuario", cascade={"persist", "remove"})
+     */
+    private $PersonalData;
 
     public function getId(): ?int
     {
@@ -83,27 +93,52 @@ class Usuario
         return $this;
     }
 
-    public function getClienteData(): ?string
+    public function getName(): ?string
     {
-        return $this->cliente_data;
+        return $this->name;
     }
 
-    public function setClienteData(string $cliente_data): self
+    public function setName(string $name): self
     {
-        $this->cliente_data = $cliente_data;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getPersonalData(): ?string
+    public function getTelefono(): ?string
     {
-        return $this->personal_data;
+        return $this->telefono;
     }
 
-    public function setPersonalData(string $personal_data): self
+    public function setTelefono(string $telefono): self
     {
-        $this->personal_data = $personal_data;
+        $this->telefono = $telefono;
 
         return $this;
     }
-}
+
+    public function getClienteData(): ?ClienteData
+    {
+        return $this->clienteData;
+    }
+
+    public function setClienteData(?ClienteData $clienteData): self
+    {
+        $this->clienteData = $clienteData;
+
+        return $this;
+    }
+
+    public function getPersonalData(): ?PersonalData
+    {
+        return $this->PersonalData;
+    }
+
+    public function setPersonalData(?PersonalData $PersonalData): self
+    {
+        $this->PersonalData = $PersonalData;
+
+        return $this;
+    }
+
+}  

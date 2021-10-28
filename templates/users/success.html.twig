@@ -1,0 +1,28 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %} VALIDO {% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ app.request.getBaseURL() }}/assets/css/espera.css">
+
+{% endblock %}
+{% block body %}
+
+ <header>
+
+        <nav id="nav" class="nav1">
+            <div class="contenedor-nav">
+
+                <div class="enlaces" id="enlaces">
+                    <a href="{{ app.request.getBaseURL() }}/" class="btn-header">Home</a>
+                    </div>
+                     </div>
+                    </nav>
+                    </header>
+
+<div class="container">
+<h1 class="login-text"> Usuario creado Exitosamente</h1>
+<p class="login-register-text"> <a href="{{ app.request.getBaseURL() }}/login">Inicia sesión</a>.</p>
+</div>
+{% endblock %}

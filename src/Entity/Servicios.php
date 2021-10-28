@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ServiciosRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,55 +27,31 @@ class Servicios
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $hora_inicio;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $hora_fin;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $costo;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=PersonalData::class, mappedBy="Servicios")
+     */
+    private $personalData;
+
+    public function __construct()
+    {
+        $this->personalData = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTipo(): ?string
+    public function getServicio(): ?string
     {
-        return $this->servicios;
+        return $this->servicio;
     }
 
-    public function setTipo(string $servicios): self
+    public function setServicio(string $servicio): self
     {
-        $this->tipo = $servicios;
-
-        return $this;
-    }
-
-    public function getHoraInicio(): ?string
-    {
-        return $this->hora_inicio;
-    }
-
-    public function setHoraInicio(string $hora_inicio): self
-    {
-        $this->hora_inicio = $hora_inicio;
-
-        return $this;
-    }
-
-    public function getHoraFin(): ?string
-    {
-        return $this->hora_fin;
-    }
-
-    public function setHoraFin(string $hora_fin): self
-    {
-        $this->hora_fin = $hora_fin;
+        $this->tipo = $servicio;
 
         return $this;
     }
@@ -89,4 +67,33 @@ class Servicios
 
         return $this;
     }
+
+    /**
+     * @return Collection|PersonalData[]
+     */
+    public function getPersonalData(): Collection
+    {
+        return $this->personalData;
+    }
+
+    public function addPersonalData(PersonalData $personalData): self
+    {
+        if (!$this->personalData->contains($personalData)) {
+            $this->personalData[] = $personalData;
+            $personalData->addServicio($this);
+        }
+
+        return $this;
+    }
+
+    public function removePersonalData(PersonalData $personalData): self
+    {
+        if ($this->personalData->removeElement($personalData)) {
+            $personalData->removeServicio($this);
+        }
+
+        return $this;
+    }
+
+   
 }
