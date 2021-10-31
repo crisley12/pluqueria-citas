@@ -39,15 +39,7 @@ class Citas
      */
     private $Fecha;
 
-    /**
-     * @ORM\Column(type="string", length=11)
-     */
-    private $telefono;
-
-    public function getHora(): ?\DateTimeInterface
-    {
-        return $this->hora;
-    }
+   
 
     public function setHora(\DateTimeInterface $hora): self
     {
@@ -88,18 +80,6 @@ class Citas
     public function setFecha(\DateTimeInterface $Fecha): self
     {
         $this->Fecha = $Fecha;
-
-        return $this;
-    }
-
-    public function getTelefono(): ?string
-    {
-        return $this->telefono;
-    }
-
-    public function setTelefono(string $telefono): self
-    {
-        $this->telefono = $telefono;
 
         return $this;
     }

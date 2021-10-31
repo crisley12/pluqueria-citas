@@ -64,7 +64,10 @@ class UsersController extends AbstractController
             
   
         if($user && $user->getRol() == 'Admin') 
-            return $this->render('dashboard/dashboard.html.twig');
+            return $this->render('dashboard/dashboard.html.twig',[
+            "servicios" => $nombres,
+            "personales" => $personales
+        ]);
         else if($user && $user->getRol() == 'Personal') 
             return $this->render('dashboard/dashboard.html.twig', [
                 "servicios" => $nombres,
