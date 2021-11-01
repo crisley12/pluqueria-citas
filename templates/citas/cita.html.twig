@@ -33,11 +33,13 @@
 				<select name="servicio" required>
 					<option value="">Selecciona Nuestros Servicios</option>
 					{% for servicio in servicios%}
-						<option value={{servicio[0]}}>{{servicio[0]}} {{ servicio[1] }}</option>
+						{% for personal in servicio["personal"] %}
+							<option value="{{ servicio[0] }} {{ personal[0] }}">{{servicio[1]}}, {{ personal[1] }}, {{ servicio[2] }}$</option>
+						{% endfor %}
 					{% endfor %}
 				</select>
 			</div>
-			
+
             <div class="input-group">
 				<input type="date" value="2021-10-25" min="2021-10-25" max="2021-12-12" placeholder="fecha" name="fecha" required>
 			</div>
