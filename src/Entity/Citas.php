@@ -39,6 +39,12 @@ class Citas
      */
     private $Fecha;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Servicios::class, inversedBy="citas")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $servicio;
+
    
 
     public function setHora(\DateTimeInterface $hora): self
@@ -80,6 +86,18 @@ class Citas
     public function setFecha(\DateTimeInterface $Fecha): self
     {
         $this->Fecha = $Fecha;
+
+        return $this;
+    }
+
+    public function getServicio(): ?Servicios
+    {
+        return $this->servicio;
+    }
+
+    public function setServicio(?Servicios $servicio): self
+    {
+        $this->servicio = $servicio;
 
         return $this;
     }

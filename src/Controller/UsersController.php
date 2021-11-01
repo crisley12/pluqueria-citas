@@ -37,8 +37,6 @@ class UsersController extends AbstractController
     }
 
    
-    
-   
 /* el usuario está accediendo, se toma los campos requeridos de la base de datos con el findOneBy*/
 
 
@@ -54,40 +52,34 @@ class UsersController extends AbstractController
 
  /*    Se obtiene los registros solicitados por el formulario de citas con el FindAll*/
         $servicios = $this->getDoctrine()->getRepository(Servicios::class)->findAll();
-        $personales = [];
         $nombres = [];
         foreach ($servicios as $key => $servicio) {
-            $personales[$servicio->getId()][] = $servicio->getPersonalData();
+            $nombres[$key][] = $servicio->getId();
             $nombres[$key][] = $servicio->getServicio();
             $nombres[$key][] = $servicio->getCosto();
+
+            foreach ($servicio->getPersonalData() as $idx => $personal) {
+                $nombres[$key]['personal'][$idx][] = $personal->getId();
+                $nombres[$key]['personal'][$idx][] = $personal->getUsuario()->getName();
+            }
         }
-            
-  
+        
+        $_SESSION['user'] = $user;
         if($user && $user->getRol() == 'Admin') 
             return $this->render('dashboard/dashboard.html.twig',[
             "servicios" => $nombres,
-            "personales" => $personales
         ]);
         else if($user && $user->getRol() == 'Personal') 
             return $this->render('dashboard/dashboard.html.twig', [
                 "servicios" => $nombres,
-                "personales" => $personales
             ]);
         else if($user && $user->getRol() == 'Cliente') 
             return $this->render('citas/cita.html.twig', [
                 "servicios" => $nombres,
-                "personales" => $personales
             ]);
-         else return $this->render('users/login error.html.twig');
+        else return $this->render('users/login error.html.twig');
     }
 
-
-
-
-    
-
-    
- 
     /**
      * @Route("/signup", name="signup")
      */
@@ -95,7 +87,6 @@ class UsersController extends AbstractController
     {
         return $this->render('users/signup.html.twig');
     }
-   
 
     /**
      * @Route("/success", name="successSignup", methods="POST")
@@ -103,36 +94,36 @@ class UsersController extends AbstractController
     public function successSignup(): Response
     {
         
-        if($_POST['password'] == $_POST['cpassword']){
+        if($_POST['password'] == $_POST['cpassword'] && $_POST['telefono'] > 4140000000){
 
-        $user = new Usuario();
-        $user->setName($_POST["username"]);
-        $user->setEmail($_POST["email"]);
-        $user->setPassword($_POST["password"]);
-        $user->setTelefono($_POST["telefono"]);
-        $user->setRol("Cliente");
+            $user = new Usuario();
+            $user->setName($_POST["username"]);
+            $user->setEmail($_POST["email"]);
+            $user->setPassword($_POST["password"]);
+            $user->setTelefono($_POST["telefono"]);
+            $user->setRol("Cliente");
 
-        switch ($user->getRol()) {
-            case 'Cliente': {
-                $clientData = new ClienteData();
-                $user->setClienteData($clientData);
-            }   break;
-            case 'Personal': {
-                $personalData = new PersonalData();
-                $user->setPersonalData($personalData);
-            } break;
-            default: break;
-        }
+            switch ($user->getRol()) {
+                case 'Cliente': {
+                    $clientData = new ClienteData();
+                    $user->setClienteData($clientData);
+                }   break;
+                case 'Personal': {
+                    $personalData = new PersonalData();
+                    $user->setPersonalData($personalData);
+                } break;
+                default: break;
+            }
 
-        try {
-            $manager = $this->getDoctrine()->getManager();
-            $manager->persist($user);
-            $manager->flush();
+            try {
+                $manager = $this->getDoctrine()->getManager();
+                $manager->persist($user);
+                $manager->flush();
 
-            return $this->render('users/success.html.twig');
-        } catch (\Throwable $th) {
-            return $this->render('users/error.html.twig');
-        }
+                return $this->render('users/success.html.twig');
+            } catch (\Throwable $th) {
+                return $this->render('users/error.html.twig');
+            }
         } else {        
            return $this->render('users/error.html.twig');
         }

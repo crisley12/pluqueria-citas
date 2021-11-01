@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Servicios;
+use App\Entity\Citas;
+use App\Entity\PersonalData;
 use App\Entity\Usuario;
 
 class CitasController extends AbstractController
@@ -24,27 +26,28 @@ class CitasController extends AbstractController
         ]);
     }
 
-/**
+    /**
      * @Route("/successCita", name="successCita")
      */
     public function successCita(): Response
     {
-        $servicios = $this->getDoctrine()->getRepository(Servicios::class)->findByName($_POST['servicio']);
-/*        $personalData = $servicios[0]->getPersonalData();
-        $user = $this->getDoctrine()->getRepository(Usuario::class)->find($_SESSION['user']->getID());
-        $citas = new Citas();
-        $citas->setFecha($user);
-        $citas->setHora($_POST["fecha"]);
-        $citas->setUser($_POST["hora"]);
-        $citas->setUser($_POST["telefono"]);
-        $citas->setServicio($servicio);
-        $citas->setPersonalData($personalData); 
+        $servicio = $this->getDoctrine()->getRepository(Servicios::class)->find(explode(' ',$_POST['servicio'])[0]);
+        $personal = $this->getDoctrine()->getRepository(PersonalData::class)->find(explode(' ',$_POST['servicio'])[1]);
+        $cliente = $this->getDoctrine()->getRepository(Usuario::class)->find($_SESSION['user']->getId())->getClienteData();
 
-       $manager = $this->getDoctrine()->getManager();
+        $citas = new Citas();
+        $citas->setClienteData($cliente);
+        $citas->setServicio($servicio);
+        $citas->setPersonalData($personal); 
+        $citas->setFecha(new \Datetime($_POST["fecha"]));
+        $citas->setHora(new \Datetime($_POST["hora"]));
+
+        $manager = $this->getDoctrine()->getManager();
         $manager->persist($citas);
-        $manager->flush();*/
+        $manager->flush();
 
         return $this->render('citas/successCita.html.twig');
     }
 
 }
+

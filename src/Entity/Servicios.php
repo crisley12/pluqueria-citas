@@ -34,9 +34,15 @@ class Servicios
      */
     private $personalData;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Citas::class, mappedBy="servicio")
+     */
+    private $citas;
+
     public function __construct()
     {
         $this->personalData = new ArrayCollection();
+        $this->citas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -90,6 +96,36 @@ class Servicios
     {
         if ($this->personalData->removeElement($personalData)) {
             $personalData->removeServicio($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Citas[]
+     */
+    public function getCitas(): Collection
+    {
+        return $this->citas;
+    }
+
+    public function addCita(Citas $cita): self
+    {
+        if (!$this->citas->contains($cita)) {
+            $this->citas[] = $cita;
+            $cita->setServicio($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCita(Citas $cita): self
+    {
+        if ($this->citas->removeElement($cita)) {
+            // set the owning side to null (unless already changed)
+            if ($cita->getServicio() === $this) {
+                $cita->setServicio(null);
+            }
         }
 
         return $this;
