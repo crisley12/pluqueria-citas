@@ -66,13 +66,9 @@ class UsersController extends AbstractController
         
         $_SESSION['user'] = $user;
         if($user && $user->getRol() == 'Admin') 
-            return $this->render('dashboard/dashboard.html.twig',[
-            "servicios" => $nombres,
-        ]);
+            return $this->forward('App/Controller/AdminController::index');
         else if($user && $user->getRol() == 'Personal') 
-            return $this->render('dashboard/dashboard.html.twig', [
-                "servicios" => $nombres,
-            ]);
+            return $this->forward('App/Controller/PersonalController::index');
         else if($user && $user->getRol() == 'Cliente') 
             return $this->render('citas/cita.html.twig', [
                 "servicios" => $nombres,
