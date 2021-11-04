@@ -16,14 +16,16 @@ $(function () {
 
     let equipo = $('#equipo').offset().top,
         servicio = $('#servicio').offset().top,
-        trabajo = $('#trabajo').offset().top;
+        trabajo = $('#trabajo').offset().top,
+        contacto = $('#contacto').offset().top;
     
 
 
     window.addEventListener('resize', function(){ 
         let equipo = $('#equipo').offset().top,
         servicio = $('#servicio').offset().top,
-        trabajo = $('#trabajo').offset().top;
+        trabajo = $('#trabajo').offset().top,
+        contacto = $('#contacto').offset().top;
         
     });
     
@@ -56,6 +58,12 @@ $(function () {
         },600);
     });
 
+$('#enlace-contacto').on('click', function(e){
+        e.preventDefault();
+        $('html, body').animate({
+            scrollTop: contacto -100
+        },600);
+    });
    
    
 });

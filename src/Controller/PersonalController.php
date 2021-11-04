@@ -13,12 +13,35 @@ use Symfony\Component\Routing\Annotation\Route;
 class PersonalController extends AbstractController
 {
     /**
-     * @Route("/login-process", name="personal")
+     * @Route("/dashboardPersonal", name="dashboardPersonal")
      */
-    public function index(): Response
+    public function dashboardPersonall(): Response
     {
-        return $this->render('personal/index.html.twig', [
+        if($_SESSION["user"]->getRol() != "Personal") return $this->redirectToRoute('auth');
+        return $this->render('personal/dashboardPersonal.html.twig', [
             'controller_name' => 'PersonalController',
         ]);
     }
+
+    /**
+     * @Route("/citas", name="citas")
+     */
+    public function citas(): Response
+    {
+        if($_SESSION["user"]->getRol() != "Personal") return $this->redirectToRoute('auth');
+        return $this->render('personal/citas.html.twig');
+        
+    }
+
+    /**
+     * @Route("/servicios", name="servicios")
+     */
+    public function servicios(): Response
+    {
+        if($_SESSION["user"]->getRol() != "Personal") return $this->redirectToRoute('auth');
+        return $this->render('personal/servicios.html.twig');
+        
+    }
 }
+
+

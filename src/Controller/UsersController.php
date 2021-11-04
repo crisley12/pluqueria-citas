@@ -66,14 +66,14 @@ class UsersController extends AbstractController
         
         $_SESSION['user'] = $user;
         if($user && $user->getRol() == 'Admin') 
-            return $this->forward('App/Controller/AdminController::index');
+            return $this->redirectToRoute('adminDashboard');
         else if($user && $user->getRol() == 'Personal') 
-            return $this->forward('App/Controller/PersonalController::index');
+            return $this->redirectToRoute('personalDashboard');
         else if($user && $user->getRol() == 'Cliente') 
             return $this->render('citas/cita.html.twig', [
                 "servicios" => $nombres,
             ]);
-        else return $this->render('users/login error.html.twig');
+        else return $this->render('users/loginerror.html.twig');
     }
 
     /**
@@ -89,15 +89,18 @@ class UsersController extends AbstractController
      */
     public function successSignup(): Response
     {
-        
-        if($_POST['password'] == $_POST['cpassword'] && $_POST['telefono'] > 4140000000){
-
+        $error = null;
+        if($_POST['password'] != $_POST['cpassword']) $error = "Contraseña invalida, vuelve a intertarlo";
+        else if(strlen($_POST['password']) < 4 || strlen($_POST['password']) > 8) $error = "Contraseña invalida, ingrese undigito mayor a 4 y menor a 8";
+        else if($_POST['telefono'] < 4140000000) $error = "ingrese un número de telefono valido";
+           
+        if($error == null){
             $user = new Usuario();
             $user->setName($_POST["username"]);
             $user->setEmail($_POST["email"]);
             $user->setPassword($_POST["password"]);
             $user->setTelefono($_POST["telefono"]);
-            $user->setRol("Cliente");
+            $user->setRol($_POST["type"]);
 
             switch ($user->getRol()) {
                 case 'Cliente': {
@@ -118,10 +121,10 @@ class UsersController extends AbstractController
 
                 return $this->render('users/success.html.twig');
             } catch (\Throwable $th) {
-                return $this->render('users/error.html.twig');
+                return $this->render('users/error.html.twig', [ "error" => "Este correo ya esxiste, ingrese otro" ]);
             }
         } else {        
-           return $this->render('users/error.html.twig');
+           return $this->render('users/error.html.twig', [ "error" => $error ]);
         }
 
     }

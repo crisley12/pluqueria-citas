@@ -67,7 +67,7 @@
 
 .container {
     width: 100%;
-    max-width: 400px;
+    max-width: 450px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -75,7 +75,7 @@
     align-items: center;
     border-radius: 5px;
     min-height: 200px;
-    background: #FFF;
+    background: #FFFa;
     padding: 30px 20px;
     
 }
@@ -150,8 +150,12 @@
     font-weight: 600;
 }
 
-.login-register-text a {
-    text-decoration: none;
-    color: #7d0a94;
+
+
+.login-register-text{
+  text-decoration: none;
+  color: red;
+  text-align-last: center;
+   
 }
 
