@@ -12,23 +12,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Usuario;
 use App\Entity\ClienteData;
 use App\Entity\PersonalData;
+use App\Entity\Servicios;
 
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/admin", name="adminDashboard")
-     */
-    public function index(): Response
-    {
-        if($_SESSION["user"]->getRol() != "Admin") return $this->redirectToRoute('auth');
-
-        return $this->render('admin/dashboard.html.twig', [
-            'controller_name' => 'AdminController',
-        ]);
-    }
-
-    /**
-     * @Route("/listausers", name="listausers")
+     * @Route("/listausers", name="adminDashboard")
      */
     public function listausers(): Response
     {
@@ -57,9 +46,10 @@ class AdminController extends AbstractController
      */
     public function createUsers(): Response
     {
+        
         $error = null;
         if($_POST['password'] != $_POST['cpassword']) $error = "Contraseña invalida, vuelve a intertarlo";
-        else if(strlen($_POST['password']) < 4 || strlen($_POST['password']) > 8) $error = "Contraseña invalida, ingrese undigito mayor a 4 y menor a 8";
+        else if(strlen($_POST['password']) < 4 || strlen($_POST['password']) > 8) $error = "Contraseña invalida, ingrese undigito mayor a 4 y menor que 8";
         else if($_POST['telefono'] < 4140000000) $error = "ingrese un número de telefono valido";
            
         if($error == null){
@@ -87,14 +77,14 @@ class AdminController extends AbstractController
                 $manager->persist($user);
                 $manager->flush();
 
-                return $this->redirectToRoute('listausers');
+                return $this->redirectToRoute('adminDashboard');
             } catch (\Throwable $th) {
-                return $this->redirectToRoute('listausers');
-                //              return $this->render('admin/createerror.html.twig', [ "error" => "Este correo ya esxiste, ingrese otro" ]);
+                return $this->redirectToRoute('adminDashboard');
+                //return $this->render('admin/createerror.html.twig', [ "error" => "Este correo ya esxiste, ingrese otro" ]);
             }
         } else {        
-            return $this->redirectToRoute('listausers');
-//           return $this->render('admin/createerror.html.twig', [ "error" => $error ]);
+            return $this->redirectToRoute('adminDashboard');
+//           //return $this->render('admin/createerror.html.twig', [ "error" => $error ]);
         }
     }
     
@@ -119,24 +109,78 @@ class AdminController extends AbstractController
                 $manager->persist($user);
                 $manager->flush();
 
-                return $this->redirectToRoute('listausers');
+                return $this->redirectToRoute('adminDashboard');
             } catch (\Throwable $th) {
-                return $this->redirectToRoute('listausers');
-                //              return $this->render('admin/createerror.html.twig', [ "error" => "Este correo ya esxiste, ingrese otro" ]);
+                return $this->redirectToRoute('adminDashboard');
+                //return $this->render('admin/createerror.html.twig', [ "error" => "Este correo ya esxiste, ingrese otro" ]);
             }
         } else {        
-            return $this->redirectToRoute('listausers');
+            return $this->redirectToRoute('adminDashboard');
 //           return $this->render('admin/createerror.html.twig', [ "error" => $error ]);
         }
     }
 
     /**
-     * @Route("/personal", name="Personal")
+     * @Route("/serviciosAdmin", name="serviciosAdmin")
      */
-    public function personal(): Response
+    public function serviciosAdmin(): Response
     {
         if($_SESSION["user"]->getRol() != "Admin") return $this->redirectToRoute('auth');
 
-        return $this->render('admin/personal.html.twig');
+        $servicio = $this->getDoctrine()->getRepository(Servicios::class)->findAll();
+        $servicePersonal = [];
+
+        foreach ($servicio as $key => $servicios) {
+            $servicioList[$key]["id"] = $servicios->getId();
+            $servicioList[$key]["name"] = $servicios->getServicio();
+            $servicioList[$key]["costo"] = $servicios->getCosto();
+        }
+
+        return $this->render('admin/serviciosAdmin.html.twig', [
+            "servicio" => $servicioList
+        ]);
+        
     }
+
+    
+    /**
+     * @Route("/personalService", name="personalService")
+     */
+    public function personalService(): Response
+    {
+        if($_SESSION["user"]->getRol() != "Admin") return $this->redirectToRoute('auth');
+
+        $servicio = $this->getDoctrine()->getRepository(Servicios::class)->find(explode(' ',$_POST['servicio'])[0]);
+        $personal = $this->getDoctrine()->getRepository(PersonalData::class)->find(explode(' ',$_POST['servicio'])[1]);
+        $servicePersonal= [];
+
+
+       
+        foreach ($personal as $key => $personalData) {
+            $servicePersonal[$key]["id"] = $personalData->getId();
+            $servicePersonal[$key]["id"] = $personalData->getId();
+        }
+
+        return $this->render('admin/personalService.html.twig', [
+            "servicio" => $servicePersonal
+        ]);
+        
+    }
+
+   
+    /**
+     * @Route("/citasAdmin", name="citasAdmin")
+     */
+    public function citasAdmin(): Response
+    {
+        if($_SESSION["user"]->getRol() != "Admin") return $this->redirectToRoute('auth');
+
+        
+        return $this->render('admin/citasAdmin.html.twig');
+        
+    }
+
+
+
+
 }

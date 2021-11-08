@@ -16,6 +16,7 @@ use App\Entity\PersonalData;
 use App\Entity\Servicios;
 
 
+
 class UsersController extends AbstractController
 {
     /**
@@ -100,7 +101,7 @@ class UsersController extends AbstractController
             $user->setEmail($_POST["email"]);
             $user->setPassword($_POST["password"]);
             $user->setTelefono($_POST["telefono"]);
-            $user->setRol($_POST["type"]);
+            $user->setRol("Cliente");
 
             switch ($user->getRol()) {
                 case 'Cliente': {

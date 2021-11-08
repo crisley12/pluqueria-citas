@@ -9,38 +9,40 @@ if (!isset($_SESSION)){
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Servicios;
 
 class PersonalController extends AbstractController
 {
+    
     /**
-     * @Route("/dashboardPersonal", name="dashboardPersonal")
+     * @Route("/citasP", name="personalDashboard")
      */
-    public function dashboardPersonall(): Response
+    public function citasP(): Response
     {
         if($_SESSION["user"]->getRol() != "Personal") return $this->redirectToRoute('auth');
-        return $this->render('personal/dashboardPersonal.html.twig', [
-            'controller_name' => 'PersonalController',
+        return $this->render('personal/citasP.html.twig');
+        
+    }
+
+    /**
+     * @Route("/serviciosP", name="serviciosP")
+     */
+    public function serviciosP(): Response
+    {
+        if($_SESSION["user"]->getRol() != "Personal") return $this->redirectToRoute('auth');
+
+        $servicio = $this->getDoctrine()->getRepository(Servicios::class)->findAll();
+        $servicioList = [];
+
+        foreach ($servicio as $key => $servicios) {
+            $servicioList[$key]["id"] = $servicios->getId();
+            $servicioList[$key]["name"] = $servicios->getServicio();
+            $servicioList[$key]["costo"] = $servicios->getCosto();
+        }
+
+        return $this->render('personal/serviciosP.html.twig', [
+            "servicio" => $servicioList
         ]);
-    }
-
-    /**
-     * @Route("/citas", name="citas")
-     */
-    public function citas(): Response
-    {
-        if($_SESSION["user"]->getRol() != "Personal") return $this->redirectToRoute('auth');
-        return $this->render('personal/citas.html.twig');
-        
-    }
-
-    /**
-     * @Route("/servicios", name="servicios")
-     */
-    public function servicios(): Response
-    {
-        if($_SESSION["user"]->getRol() != "Personal") return $this->redirectToRoute('auth');
-        return $this->render('personal/servicios.html.twig');
-        
     }
 }
 
