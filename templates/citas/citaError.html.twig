@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+
+
+ {% block title %} Reservaciones {% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ app.request.getBaseURL() }}/assets/css/formulario.css">
+
+{% endblock %}
+
+{% block body %}
+
+<header>
+
+        <nav id="nav" class="nav1">
+            <div class="contenedor-nav">
+
+                <div class="enlaces" id="enlaces">
+                    <a href="{{ app.request.getBaseURL() }}" class="btn-header">Home</a>
+                    </div>
+                     </div>
+                    </nav>
+                    </header>
+
+	<div class="container">
+	 <form action="successCita" method="POST" class="login-email">
+			
+            <p class="login-text" style="font-size: 2rem; font-weight: 800;">Haga una Cita</p>
+			<div class="input-group">
+            <p class="login-register-text">{{ error }}</p>
+				<h1 value={$personalData}></h1>
+			</div>
+            <div class="input-group">
+				<select name="servicio" required>
+					<option value="">Selecciona Nuestros Servicios</option>
+					{% for servicio in servicios%}
+						{% if servicio["personal"]  is defined %}
+							{% for personal in servicio["personal"] %}
+									<option value="{{ servicio[0] }} {{ personal[0] }}">{{servicio[1]}}, {{ personal[1] }}, {{ servicio[2] }}$</option>
+							{% endfor %}
+						{% endif %}
+					{% endfor %}
+				</select>
+			</div>
+
+            <div class="input-group">
+				<input type="date" value="2021-10-25" min="2021-10-25" max="2021-12-12" placeholder="fecha" name="fecha" required>
+			</div>
+			<div class="input-group">
+				<input type="time" value="10:00"  placeholder="hora" name="hora" required>
+			</div>
+           
+			<div class="input-group">
+				<button name="submit" class="btn">Enviar</button>
+			</div>
+			<p class="login-register-text"><a href="{{ app.request.getBaseURL() }}/login">Regresar</a></p>
+		</form>
+	</div>
+     {% endblock %}
+
+
+

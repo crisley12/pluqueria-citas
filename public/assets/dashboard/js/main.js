@@ -59,7 +59,6 @@ $(document).on("click", ".btnEditar", function(){
     $(".modal-header").css("background-color", "#007bff");
     $(".modal-header").css("color", "white");
     $(".modal-title").text("Editar Persona");
-    $("#formPersonas").action("updateuser");
     $("#modalCRUD").modal("show");  
     
 });

@@ -61,7 +61,7 @@ class UsersController extends AbstractController
 
             foreach ($servicio->getPersonalData() as $idx => $personal) {
                 $nombres[$key]['personal'][$idx][] = $personal->getId();
-                $nombres[$key]['personal'][$idx][] = $personal->getUsuario()->getName();
+                $nombres[$key]['personal'][$idx][] = $personal->getUsuario();
             }
         }
         
@@ -101,7 +101,7 @@ class UsersController extends AbstractController
             $user->setEmail($_POST["email"]);
             $user->setPassword($_POST["password"]);
             $user->setTelefono($_POST["telefono"]);
-            $user->setRol("Cliente");
+            $user->setRol($_POST["type"]);
 
             switch ($user->getRol()) {
                 case 'Cliente': {

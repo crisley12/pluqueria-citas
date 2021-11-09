@@ -79,12 +79,15 @@ class AdminController extends AbstractController
 
                 return $this->redirectToRoute('adminDashboard');
             } catch (\Throwable $th) {
+                return Swal.fire("Mensaje de Advertencia","Este coreo ya existe porfavor ingrese otro","warning");
                 return $this->redirectToRoute('adminDashboard');
-                //return $this->render('admin/createerror.html.twig', [ "error" => "Este correo ya esxiste, ingrese otro" ]);
+                
             }
-        } else {        
-            return $this->redirectToRoute('adminDashboard');
-//           //return $this->render('admin/createerror.html.twig', [ "error" => $error ]);
+        } else {    
+            return $this->redirectToRoute('adminDashboard'); 
+            return $this->Swal.fire("Mensaje de Advertencia","error" ,"warning");      
+            
+                  
         }
     }
     
@@ -112,11 +115,11 @@ class AdminController extends AbstractController
                 return $this->redirectToRoute('adminDashboard');
             } catch (\Throwable $th) {
                 return $this->redirectToRoute('adminDashboard');
-                //return $this->render('admin/createerror.html.twig', [ "error" => "Este correo ya esxiste, ingrese otro" ]);
+                return $this->Swal.fire("Mensaje de Advertencia","Este coreo ya existe porfavor ingrese otro","warning");
             }
         } else {        
             return $this->redirectToRoute('adminDashboard');
-//           return $this->render('admin/createerror.html.twig', [ "error" => $error ]);
+            return $this->Swal.fire("Mensaje de Advertencia","$error" ,"warning");
         }
     }
 

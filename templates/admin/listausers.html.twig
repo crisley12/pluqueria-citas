@@ -1,12 +1,19 @@
 {% extends 'baseDashboard.html.twig' %}
 
-{% block title %} Lista de Usuarios {% endblock %}
+ 
+
+{% block title %} Dashboard {% endblock %}
+
+ 
+   
+  
 
    
-
+  
 
    {% block body %}
-
+    
+    <link rel="stylesheet" href="{{ app.request.getBaseURL() }}/assets/select2/select2.min.css">
    <body id="page-top">
 
    <!-- Page Wrapper -->
@@ -18,7 +25,7 @@
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center"> 
         <div class="sidebar-brand-icon rotate-n-15">
-         
+        <i class="fas fa-fw fa-cog"></i>
         </div>
         <div class="sidebar-brand-text mx-3">Armany Studios</div>
       </a>
@@ -41,12 +48,15 @@
       <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-          <span>Usuarios</span>
+          <i class="fas fa-list"></i>
+          <span>Lista</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{ app.request.getBaseURL() }}/listausers">Clientes</a>
-             <a class="collapse-item" href="{{ app.request.getBaseURL() }}/personal">Personal</a>
+            <a class="collapse-item" href="{{ app.request.getBaseURL() }}/listausers">Usuarios</a>
+             <a class="collapse-item" href="{{ app.request.getBaseURL() }}/serviciosAdmin">Servicios</a>
+             <a class="collapse-item" href="{{ app.request.getBaseURL() }}/personalService">Personal y Servicios</a>
+             <a class="collapse-item" href="{{ app.request.getBaseURL() }}/citasAdmin">Citas</a>
           </div>
         </div>
       </li>
@@ -121,8 +131,10 @@
                     <div class="table-responsive">        
                         <table id="tablaPersonas" class="table table-striped table-bordered table-condensed" style="width:100%">
                         <thead class="text-center">
-                            <tr>
-                                <th>Id</th>                              
+                                  
+  
+                          <tr>
+                                <th>Id</th>                         
                                 <th>Email</th>  
                                 <th>Password</th>                                
                                 <th>rol</th> 
@@ -143,6 +155,7 @@
                                     <td id="{{ user["id"] }}"></td>
                                 </tr>
                             {% endfor %}
+                            
                         </tbody>
                        </table>                    
                     </div>
@@ -158,6 +171,7 @@
                 <h5 class="modal-title" id="exampleModalLabel"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                 </button>
+              
             </div>
         <form action="createusers" method="POST" id="formPersonas">    
             <div class="modal-body">
@@ -167,7 +181,7 @@
                 </div>
                 <div class="form-group">
                 <label name="nombre" class="col-form-label">Nombre:</label>
-                <input type="text"  placeholder="Cliente" class="form-control" id="nombre" name="username" required>
+                <input type="text"  placeholder="nombre" class="form-control" id="nombre" name="username" required>
                 </div>         
                 <div class="form-group">
                 <label name="number" class="col-form-label">Telefono:</label>
@@ -175,8 +189,7 @@
                 </div> 
                 <div class="form-group">
                 <label name="type" class="col-form-label">Rol:</label>
-                <select name="type" id="rol" class="form-control">
-                    <option value="Admin">Admin</option>
+                <select name="type" id="rol" class="form-control" required>
                     <option value="Personal">Personal</option>
                     <option value="Cliente">Cliente</option>
                 </select>
@@ -223,7 +236,7 @@
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
-
+</di>
   <!-- Logout Modal-->
   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -237,20 +250,19 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <a class="btn btn-white" href="{{ app.request.getBaseURL() }}/login">Salir</a>
         </div>
       </div>
     </div>
   </div>
 
-<form style="opacity:0">
-    <h1>hola</h1>
-</form>
+  <script src="{{ app.request.getBaseURL() }}/assets/js/create.js"></script>
+  <script src="{{ app.request.getBaseURL() }}/assets/select2/select2.min.js"></script>
+  <script src="{{ app.request.getBaseURL() }}/assets/sweetalert2/sweetalert2.js"></script>
 
-
-<script src="{{ app.request.getBaseURL() }}/assets/js/create.js"></script>
 
    {% endblock %}
+
 
 
 
