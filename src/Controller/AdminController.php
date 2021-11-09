@@ -8,6 +8,7 @@ if (!isset($_SESSION)){
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Usuario;
 use App\Entity\ClienteData;
@@ -82,16 +83,16 @@ class AdminController extends AbstractController
                 return $this->redirectToRoute('adminDashboard');
                 //return $this->render('admin/createerror.html.twig', [ "error" => "Este correo ya esxiste, ingrese otro" ]);
             }
-        } else {        
+        } else {
             return $this->redirectToRoute('adminDashboard');
 //           //return $this->render('admin/createerror.html.twig', [ "error" => $error ]);
         }
     }
     
     /**
-     * @Route("/updateusers", name="updateUsers", methods="POST")
+     * @Route("/updateuser/{id}", name="updateUsers", methods="POST")
      */
-    public function updateUsers(): Response
+    public function updateUsers($id): Response
     {
         $error = null;
         if($_POST['password'] != $_POST['cpassword']) $error = "Contraseña invalida, vuelve a intertarlo";
@@ -99,7 +100,7 @@ class AdminController extends AbstractController
         else if($_POST['telefono'] < 4140000000) $error = "ingrese un número de telefono valido";
            
         if($error == null){
-            $user = $this->getDoctrine()->getRepository(Usuario::class)->find($_POST["id"]);
+            $user = $this->getDoctrine()->getRepository(Usuario::class)->find($id);
             $user->setName($_POST["username"]);
             $user->setPassword($_POST["password"]);
             $user->setTelefono($_POST["telefono"]);
@@ -112,12 +113,27 @@ class AdminController extends AbstractController
                 return $this->redirectToRoute('adminDashboard');
             } catch (\Throwable $th) {
                 return $this->redirectToRoute('adminDashboard');
-                //return $this->render('admin/createerror.html.twig', [ "error" => "Este correo ya esxiste, ingrese otro" ]);
+                // return $this->render('admin/createerror.html.twig', [ "error" => "Este correo ya esxiste, ingrese otro" ]);
             }
-        } else {        
-            return $this->redirectToRoute('adminDashboard');
-//           return $this->render('admin/createerror.html.twig', [ "error" => $error ]);
+        } else {
+            // return $this->redirectToRoute('adminDashboard');
+            // return $this->render('admin/createerror.html.twig', [ "error" => $error ]);
+            return $this->render('users/error.html.twig', [ "error" => $error ]);
         }
+    }
+
+    /**
+     * @Route("/delete/{id}", name="deleteuser", methods="POST")
+     */
+    public function delteUser($id): Response
+    {
+        $user = $this->getDoctrine()->getRepository(Usuario::class)->find($id);
+    
+        $delete = $this->getDoctrine()->getManager();
+        $delete->remove($user);
+        $delete->flush();
+
+        return $this->redirectToRoute('adminDashboard');
     }
 
     /**
