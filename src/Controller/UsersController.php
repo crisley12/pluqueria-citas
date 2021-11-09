@@ -127,7 +127,6 @@ class UsersController extends AbstractController
         } else {        
            return $this->render('users/error.html.twig', [ "error" => $error ]);
         }
-
     }
     
 }
