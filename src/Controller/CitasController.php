@@ -27,6 +27,14 @@ class CitasController extends AbstractController
     }
 
     /**
+     * @Route("/citaError", name="citaError")
+     */
+    public function citaError(): Response
+    {
+        return $this->render('citas/citaError.html.twig');
+    }
+
+    /**
      * @Route("/successCita", name="successCita")
      */
     public function successCita(): Response
@@ -39,8 +47,11 @@ class CitasController extends AbstractController
             "Fecha" => new \Datetime($_POST["fecha"])
         ]);
         $cliente = $this->getDoctrine()->getRepository(Usuario::class)->find($_SESSION['user']->getId())->getClienteData();
+        
+        $error = null;
+         if(count ($citas)> 3) $error = "Lo sentimos, el estilista ya no tiene cupo para esa fecha, seleccione otra , o comuniquese con el número: 04247320235";
 
-        if(count($citas) < 3 ){
+         if($error == null){
             $citas = new Citas();
             $citas->setClienteData($cliente);
             $citas->setServicio($servicio);
@@ -54,7 +65,7 @@ class CitasController extends AbstractController
 
             return $this->render('citas/successCita.html.twig');
         } else {
-            return $this->render('auth/index.html.twig');
+            return $this->render('citas/citaError.html.twig', [ "error" => $error ]);
         }
 
     }

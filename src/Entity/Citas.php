@@ -45,7 +45,10 @@ class Citas
      */
     private $servicio;
 
-   
+   public function getId(): ?int
+   {
+       return $this->id;
+   }
 
     public function setHora(\DateTimeInterface $hora): self
     {
@@ -54,6 +57,11 @@ class Citas
         return $this;
     }
 
+    public function getHora(): \DateTimeInterface
+    {
+        return $this->hora;
+    }
+    
     public function getClienteData(): ?ClienteData
     {
         return $this->clienteData;
