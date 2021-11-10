@@ -14,6 +14,7 @@ use App\Entity\Usuario;
 use App\Entity\ClienteData;
 use App\Entity\PersonalData;
 use App\Entity\Servicios;
+use App\Entity\Citas;
 
 class AdminController extends AbstractController
 {
@@ -42,6 +43,15 @@ class AdminController extends AbstractController
         
     }
     
+/**
+     * @Route("/listausersError", name="listausersError")
+     */
+    public function listausersError(): Response
+    {
+    return $this->render('admin/listausersError.html.twig');
+
+    }
+
     /**
      * @Route("/createusers", name="createUsers", methods="POST")
      */
@@ -80,13 +90,12 @@ class AdminController extends AbstractController
 
                 return $this->redirectToRoute('adminDashboard');
             } catch (\Throwable $th) {
-                return Swal.fire("Mensaje de Advertencia","Este coreo ya existe porfavor ingrese otro","warning");
-                return $this->redirectToRoute('adminDashboard');
+                return $this->render('admin/listausersError.html.twig',  [ "error" => "Este correo ya esxiste, ingrese otro" ]);
+               
                 
             }
         } else {
-            return $this->redirectToRoute('adminDashboard');
-//           //return $this->render('admin/createerror.html.twig', [ "error" => $error ]);
+             return $this->render('admin/listausersError.html.twig', [ "error" => $error ]);
         }
     }
     
@@ -113,13 +122,10 @@ class AdminController extends AbstractController
 
                 return $this->redirectToRoute('adminDashboard');
             } catch (\Throwable $th) {
-                return $this->redirectToRoute('adminDashboard');
-                // return $this->render('admin/createerror.html.twig', [ "error" => "Este correo ya esxiste, ingrese otro" ]);
+                return $this->render('admin/listausersError.html.twig',  [ "error" => "Este correo ya esxiste, ingrese otro" ]);
             }
         } else {
-            // return $this->redirectToRoute('adminDashboard');
-            // return $this->render('admin/createerror.html.twig', [ "error" => $error ]);
-            return $this->render('users/error.html.twig', [ "error" => $error ]);
+            return $this->render('admin/listausersError.html.twig',  [ "error" => $error]);
         }
     }
 
@@ -136,6 +142,7 @@ class AdminController extends AbstractController
 
         return $this->redirectToRoute('adminDashboard');
     }
+
 
     /**
      * @Route("/serviciosAdmin", name="serviciosAdmin")
@@ -191,13 +198,28 @@ class AdminController extends AbstractController
     public function citasAdmin(): Response
     {
         if($_SESSION["user"]->getRol() != "Admin") return $this->redirectToRoute('auth');
-
         
-        return $this->render('admin/citasAdmin.html.twig');
+       
+        $citas = $this->getDoctrine()->getRepository(Citas::class)->findAll();
+        $citasList = [];
         
-    }
+        foreach ($citas as $key => $cita) {
+            $citasList[$key]["id"] = $cita->getId();
+            $citasList[$key]["clienteData"] = $cita->getClienteData()->getUsuario()->getName();
+            $citasList[$key]["PersonalData"] = $cita->getPersonalData()->getUsuario()->getName();
+            $citasList[$key]["hora"] = $cita->getHora()->format("H:i");
+            $citasList[$key]["fecha"] = $cita->getFecha()->format("d-m-Y");
+            $citasList[$key]["servicio"] = $cita->getServicio()->getServicio();
+            $citasList[$key]["costo"] = $cita->getServicio()->getCosto();
 
+        }
+        return $this->render('admin/citasAdmin.html.twig', [ "citas" => $citasList ]);
 
+        }
 
+       
 
-}
+ }
+
+    
+    
