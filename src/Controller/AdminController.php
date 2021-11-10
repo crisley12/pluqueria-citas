@@ -25,7 +25,6 @@ class AdminController extends AbstractController
     {
         if($_SESSION["user"]->getRol() != "Admin") return $this->redirectToRoute('auth');
 
-
         $users = $this->getDoctrine()->getRepository(Usuario::class)->findAll();
         $userList = [];
         foreach ($users as $key => $user) {
@@ -191,7 +190,6 @@ class AdminController extends AbstractController
         
     }
 
-   
     /**
      * @Route("/citasAdmin", name="citasAdmin")
      */
@@ -199,7 +197,6 @@ class AdminController extends AbstractController
     {
         if($_SESSION["user"]->getRol() != "Admin") return $this->redirectToRoute('auth');
         
-       
         $citas = $this->getDoctrine()->getRepository(Citas::class)->findAll();
         $citasList = [];
         
@@ -208,18 +205,27 @@ class AdminController extends AbstractController
             $citasList[$key]["clienteData"] = $cita->getClienteData()->getUsuario()->getName();
             $citasList[$key]["PersonalData"] = $cita->getPersonalData()->getUsuario()->getName();
             $citasList[$key]["hora"] = $cita->getHora()->format("H:i");
-            $citasList[$key]["fecha"] = $cita->getFecha()->format("d-m-Y");
+            $citasList[$key]["fecha"] = $cita->getFecha()->format("d/m/Y");
             $citasList[$key]["servicio"] = $cita->getServicio()->getServicio();
             $citasList[$key]["costo"] = $cita->getServicio()->getCosto();
-
         }
         return $this->render('admin/citasAdmin.html.twig', [ "citas" => $citasList ]);
+    }
+    
+    /**
+     * @Route("/citasDelete/{id}", name="citasDelete")
+     */
+    public function citasDelete($id): Response
+    {
+        $cita = $this->getDoctrine()->getRepository(Citas::class)->find($id);
+    
+        $delete = $this->getDoctrine()->getManager();
+        $delete->remove($cita);
+        $delete->flush();
 
-        }
-
-       
-
- }
+        return $this->redirectToRoute('citasAdmin');
+    }
+}
 
     
     

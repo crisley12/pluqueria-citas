@@ -159,30 +159,30 @@
                 <div class="form-group">
         <form action="citasAdmin" method="POST" id="formPersonas">    
             <div class="modal-body">
-                <div class="form-group">
+              <div class="form-group">
                 <label name="nombre" class="col-form-label">Nombre:</label>
                 <input type="text"  placeholder="Cliente" class="form-control" id="nombre" name="username" required>
-                </div>  
-                <div class="form-group">    
+              </div>  
+              <div class="form-group">    
                 <label name="type" class="col-form-label">Selecione el servicio</label>
-                    <select name="type" id="" class="form-control">
-                    <option value="Personal">Personal</option>
-                    <option value="Cliente">Cliente</option>
-                    </select>
-                <div class="input-group">
-                <div class="form-group">
+                <select name="type" id="personal" class="form-control">
+                  <option value="Personal">Personal</option>
+                  <option value="Cliente">Cliente</option>
+                </select>
+              <div class="input-group">
+              <div class="form-group">
                 <label name="fecha" class="col-form-label">fecha:</label>
-                <input type="date" value="2021-10-25" min="2021-10-25" max="2021-12-12" placeholder="fecha" class="form-control" id="fecha" name="fecha" required>
-                </div>
-                <div class="form-group">
+                <input type="date" placeholder="fecha" class="form-control" id="fecha" name="fecha" required>
+              </div>
+              <div class="form-group">
                 <label name="hora" class="col-form-label">Hora</label>
-                <input type="time"  value="10:00"  placeholder="hora" class="form-control" id="hora" name="hora" required>
-                </div>          
-                <input type="hidden" name="id" class="form-control" id="userid" required>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                <button type="button" id="btnGuardar" class="btn btn-dark">Guardar</button>
+                <input type="time" placeholder="hora" class="form-control" id="hora" name="hora" required>
+              </div>          
+              <input type="hidden" name="id" class="form-control" id="citaid" required>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+              <button type="button" id="btnGuardar" class="btn btn-dark">Guardar</button>
             </div>
         </form>    
         </div>

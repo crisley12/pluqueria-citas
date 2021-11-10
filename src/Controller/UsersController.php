@@ -61,7 +61,7 @@ class UsersController extends AbstractController
 
             foreach ($servicio->getPersonalData() as $idx => $personal) {
                 $nombres[$key]['personal'][$idx][] = $personal->getId();
-                $nombres[$key]['personal'][$idx][] = $personal->getUsuario();
+                $nombres[$key]['personal'][$idx][] = $personal->getUsuario()->getName();
             }
         }
         

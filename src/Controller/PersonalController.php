@@ -55,21 +55,18 @@ class PersonalController extends AbstractController
     {
         if($_SESSION["user"]->getRol() != "Personal") return $this->redirectToRoute('auth');
 
-        $servicio = $this->getDoctrine()->getRepository(Servicios::class)->findAll();
+        $user = $this->getDoctrine()->getRepository(Usuario::class)->find($_SESSION["user"]->getId());
+        $personal = $user->getPersonalData();
+        $servicios = $personal->getServicios();
         $servicioList = [];
 
-        foreach ($servicio as $key => $servicios) {
-            $servicioList[$key]["id"] = $servicios->getId();
-            $servicioList[$key]["name"] = $servicios->getServicio();
-            $servicioList[$key]["costo"] = $servicios->getCosto();
+        foreach ($servicios as $key => $servicio) {
+            $servicioList[$key]["id"] = $servicio->getId();
+            $servicioList[$key]["name"] = $servicio->getServicio();
+            $servicioList[$key]["costo"] = $servicio->getCosto();
         }
-          
-        return $this->render('personal/serviciosP.html.twig', [
-            "servicio" => $servicioList
-    ]);
-
-
-}
+        return $this->render('personal/serviciosP.html.twig', [ "servicio" => $servicioList ]);
+    }
 
 }
 
